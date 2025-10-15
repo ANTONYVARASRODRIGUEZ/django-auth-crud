@@ -1,0 +1,10 @@
+{% extends 'tickets/base.html' %}
+{% block content %}
+<h3>¿Seguro que deseas eliminar el usuario "{{ object.nombre }}"?</h3>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    <a href="{% url 'tickets:usuario_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

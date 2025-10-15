@@ -1,0 +1,11 @@
+{% extends 'tickets/base.html' %}
+{% block content %}
+<h2>{{ view.object.pk|yesno:"Editar Ticket,Nuevo Ticket" }}</h2>
+
+<form method="post" enctype="multipart/form-data" class="bg-white p-4 rounded">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">💾 Guardar</button>
+    <a href="{% url 'tickets:ticket_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'tickets/base.html' %}
+{% block content %}
+<h2>Detalles del Ticket</h2>
+
+<div class="card p-3 bg-white">
+    <p><strong>Asunto:</strong> {{ ticket.asunto }}</p>
+    <p><strong>Descripción:</strong> {{ ticket.descripcion }}</p>
+    <p><strong>Estado:</strong> {{ ticket.estado }}</p>
+    <p><strong>Usuario:</strong> {{ ticket.id_usuario.nombre }}</p>
+    {% if ticket.imagen %}
+        <p><img src="{{ ticket.imagen.url }}" width="250" class="img-thumbnail"></p>
+    {% endif %}
+</div>
+
+<a href="{% url 'tickets:ticket_list' %}" class="btn btn-secondary mt-3">⬅ Volver</a>
+{% endblock %}

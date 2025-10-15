@@ -1,0 +1,59 @@
+{% extends 'tickets/base.html' %}
+{% block content %}
+<h2 class="mb-3">Lista de Tickets</h2>
+<a href="{% url 'tickets:ticket_create' %}" class="btn btn-success mb-3">➕ Nuevo Ticket</a>
+
+<table class="table table-striped table-hover align-middle shadow-sm bg-white">
+    <thead class="table-primary">
+        <tr class="text-center">
+            <th>ID</th>
+            <th>Imagen</th>
+            <th>Asunto</th>
+            <th>Estado</th>
+            <th>Usuario</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in tickets %}
+        <tr class="text-center">
+            <td>{{ t.id }}</td>
+            
+            <!-- Columna de imagen -->
+            <td>
+                {% if t.imagen %}
+                    <img src="{{ t.imagen.url }}" alt="Imagen del ticket" 
+                         width="80" height="80" 
+                         class="rounded border shadow-sm object-fit-cover">
+                {% else %}
+                    <span class="text-muted">Sin imagen</span>
+                {% endif %}
+            </td>
+
+            <td class="text-start">
+                <a href="{% url 'tickets:ticket_detail' t.id %}" class="fw-bold text-decoration-none">
+                    {{ t.asunto }}
+                </a>
+            </td>
+            <td>
+                <span class="badge 
+                    {% if t.estado == 'nuevo' %}bg-secondary
+                    {% elif t.estado == 'en_progreso' %}bg-warning text-dark
+                    {% elif t.estado == 'resuelto' %}bg-success
+                    {% elif t.estado == 'cerrado' %}bg-dark
+                    {% endif %}">
+                    {{ t.estado|title }}
+                </span>
+            </td>
+            <td>{{ t.id_usuario.nombre }}</td>
+            <td>
+                <a href="{% url 'tickets:ticket_update' t.id %}" class="btn btn-warning btn-sm">✏️ Editar</a>
+                <a href="{% url 'tickets:ticket_delete' t.id %}" class="btn btn-danger btn-sm">🗑️ Eliminar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" class="text-center text-muted py-3">No hay tickets registrados.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
